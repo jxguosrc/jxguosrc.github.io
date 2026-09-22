@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Note</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <p><a href="./">← All notes</a></p>
+  <hr>
+
+  <article id="note">
+    <p>Loading note...</p>
+  </article>
+
+  <hr>
+  <footer id="source-link"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@16.4.0/lib/marked.umd.min.js"></script>
+  <script>
+    const name = new URLSearchParams(location.search).get("file");
+    const note = document.getElementById("note");
+    const sourceLink = document.getElementById("source-link");
+
+    if (!name || !/^[a-z0-9-]+$/i.test(name)) {
+      note.innerHTML = "<h1>Invalid note</h1>";
+    } else {
+      const path = "./" + name + ".md";
+      fetch(path)
+        .then(function (response) {
+          if (!response.ok) throw new Error("Note not found");
+          return response.text();
+        })
+        .then(function (markdown) {
+          note.innerHTML = marked.parse(markdown);
+          const heading = note.querySelector("h1");
+          if (heading) document.title = heading.textContent;
+          sourceLink.innerHTML = '<a href="' + path + '">View Markdown source</a>';
+        })
+        .catch(function () {
+          note.innerHTML = "<h1>Note not found</h1><p>The requested Markdown file could not be loaded.</p>";
+        });
+    }
+  </script>
+</body>
+</html>
