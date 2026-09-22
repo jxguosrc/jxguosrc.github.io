@@ -1,8 +1,12 @@
-# Old-school static homepage
+# Jiaxuan Guo's homepage
 
 The homepage uses only HTML and CSS. The Notes reader uses a small amount of JavaScript plus Marked to fetch and render `.md` files.
 
-Run locally:
+Live site: <https://jxguosrc.github.io/>
+
+## Local preview
+
+Run from this directory:
 
 ```bash
 python3 -m http.server 5173 --bind 127.0.0.1
