@@ -27,7 +27,7 @@
       note.innerHTML = "<h1>Invalid note</h1>";
     } else {
       const path = "./" + name + ".md";
-      fetch(path)
+      fetch(path + "?v=" + Date.now(), { cache: "no-store" })
         .then(function (response) {
           if (!response.ok) throw new Error("Note not found");
           return response.text();
